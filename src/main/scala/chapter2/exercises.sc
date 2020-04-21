@@ -58,3 +58,41 @@ def recPower(x: Double, n: Int): Double = (x, n) match {
   case _ if n < 0 => 1.0 / recPower(x, -n)
 }
 recPower(2, -10)
+/*11*/
+import java.time.LocalDate
+
+implicit class DateInterpolator(val sc: StringContext) extends AnyVal {
+  def date(args: Any*): LocalDate = {
+    println(sc)
+    println(args)
+    if (args.length != 3) throw new IllegalArgumentException("3 arguments are required")
+    for (x <- sc.parts) if (x.length > 0 && !x.equals("-")) throw new IllegalArgumentException("yearr-month-day format required")
+    val year = args(0).toString.toInt
+    val month = args(1).toString.toInt
+    val day = args(2).toString.toInt
+    LocalDate.of(year, month, day)
+  }
+}
+val year=2012
+val month=11
+val day=5
+val someOtherVal = 2.5
+val testInterp: LocalDate = date"$year-$month-$day"
+/*
+The arguments passed are passed to `date` based on `$`
+so if
+val year=2012
+val month=11
+val day=5
+val someOtherVal = 2.5
+val testInterp: LocalDate = date"$year$month$day$someOtherVal"
+args = ArraySeq(2012, 11, 5, 2.5)
+sc = StringContext(ArraySeq(, , , , ))
+since there are no string characters between the values
+if val testInterp: LocalDate = date"$year-$month-$day"
+sc = StringContext(ArraySeq(, -, -, ))
+args = ArraySeq(2012, 11, 5)
+
+The whole idea id to define a LocalDate using a string interpolator
+ */
+println(f"The date is $testInterp")
