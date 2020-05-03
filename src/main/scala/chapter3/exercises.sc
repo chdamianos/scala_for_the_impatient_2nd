@@ -61,15 +61,21 @@ fun8(ArrayBuffer(1, 2, 3))
 fun8(ArrayBuffer(1, 5, -3, 2, -5, 0, 6))
 fun8(ArrayBuffer(1, 2, 3, -4, 5, -6, 7, -8))
 /*9*/
-val aa = ArrayBuffer(1, 2, 3, -4, 5, -6, 7, -8)
-val indicesLTzero = aa.indices.filter(aa(_) < 0)
-val indicesToremove = indicesLTzero.drop(1)
-if (indicesLTzero.length>1) {
+def removeNegTrailing(a: ArrayBuffer[Int]): Unit = {
+  val indicesLTzero = a.indices.filter(a(_) < 0)
   val indicesToremove = indicesLTzero.drop(1)
-  // need a method to select the indices between the first and last elements
-  // of `indicesToremove`, e.g. if indicesToremove = (5, 7) we need (6)
-  // that's the element that needs moving, if indicesToremove = (5, 7, 10) then we
-  // would need (6, 8, 9) those are the elements need moving
-} else {
-  1
+  val indicesToKeep = for (i <- a.indices if !(indicesToremove contains i)) yield i
+  for (i <- indicesToKeep.indices) {
+    a(i) = a(indicesToKeep(i))
+  }
+  a.trimEnd(indicesToremove.length)
 }
+val a1 = ArrayBuffer(1, 2, 3, -4, 5, -6, 7, -8)
+removeNegTrailing(a1)
+println(a1)
+val a2 = ArrayBuffer(1, 2, 3, -4, 5)
+removeNegTrailing(a2)
+println(a2)
+val a3 = ArrayBuffer(1)
+removeNegTrailing(a3)
+println(a3)
