@@ -1,5 +1,6 @@
 /*1*/
 
+import scala.collection.JavaConverters
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 
@@ -79,3 +80,19 @@ println(a2)
 val a3 = ArrayBuffer(1)
 removeNegTrailing(a3)
 println(a3)
+/*10*/
+
+import java.util.TimeZone.getAvailableIDs
+
+val prefix = "America/"
+val sortedAmericaTz = (for {
+  tz <- getAvailableIDs
+  if tz.startsWith(prefix)
+} yield tz).map(_.drop(prefix.length)).sortWith(_ < _)
+/*11*/
+
+import java.awt.datatransfer._
+import scala.jdk.CollectionConverters._
+val flavors = SystemFlavorMap.getDefaultFlavorMap.asInstanceOf[SystemFlavorMap]
+val nativeFavors = flavors.getNativesForFlavor(DataFlavor.imageFlavor)
+val nativeFlavorsScala = nativeFavors.asScala
