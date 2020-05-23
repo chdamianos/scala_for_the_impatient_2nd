@@ -8,7 +8,7 @@ class Person(val name: String) {
   override def toString = s"${getClass.getName}[name=$name]"
 }
 
-class SecretAgent(codeName: String) extends Person(codeName) {
+class SecretAgent(codeName: String) extends Employee(codeName) {
   override val name = "secret"
   override val toString = "secret"
 }
