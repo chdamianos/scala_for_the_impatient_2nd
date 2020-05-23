@@ -14,7 +14,7 @@ object ex1 extends App {
 }
 
 class BankAccount(initialBalance: Double) {
-  private var balance = initialBalance
+  protected var balance: Double = initialBalance
 
   def currentBalance: Double = balance
 
